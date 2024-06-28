@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - MY DAILY2K</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #000;
+      margin: 0;
+      padding: 0;
+      color: #FFD700; /* Gold color */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      padding: 20px;
+      background-color: #222;
+    }
+    .header img {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 24px;
+      color: #FFD700;
+    }
+    .form-container {
+      width: 100%;
+      max-width: 400px;
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #333;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .form-group label {
+      display: block;
+      color: #FFD700;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #FFD700;
+      border-radius: 5px;
+      background-color: #222;
+      color: #FFD700;
+    }
+    .form-group button {
+      width: 100%;
+      padding: 10px;
+      background-color: #FFD700;
+      border: none;
+      border-radius: 5px;
+      color: #000;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .form-group button:hover {
+      background-color: #FFC107;
+    }
+    .login-link {
+      text-align: center;
+      margin-top: 10px;
+    }
+    .login-link a {
+      color: #FFD700;
+      text-decoration: none;
+    }
+    .login-link a:hover {
+      text-decoration: underline;
+    }
+    .message {
+      width: 100%;
+      max-width: 400px;
+      background-color: #444;
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: 20px;
+      color: #fff; /* White text */
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <img src="\Users\adeye\Downloads\MYDAILY2KPJ\2K.png" alt="MY DAILY2K Logo">
+    <h1>MY DAILY2K</h1>
+  </div>
+  <div class="form-container">
+    <h2>Sign Up</h2>
+    <form id="signupForm">
+      <div class="form-group">
+        <label for="fullName">Full Name:</label>
+        <input type="text" id="fullName" required>
+      </div>
+      <div class="form-group">
+        <label for="number">Phone Number:</label>
+        <input type="text" id="number" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" required>
+      </div>
+      <div class="form-group">
+        <button type="submit">Sign Up</button>
+      </div>
+      <div class="login-link">
+        <p>Already have an account? <a href="login.html">Login</a></p>
+      </div>
+    </form>
+  </div>
+  <div class="message">
+    <p>Hello there 👋 Welcome to my Daily2k where you make money for watching ads. This is a prototype of this project. We may or may not launch the actual project, but it's up to you to decide if it's worth it by using your free time to engage on this website and earn 2kpoints. This prototype may or may not pay you; we can’t guarantee it yet until august 1st. If this project works out, we will both benefit from it. It’s not a promise that you will get paid, but we hope it works out like we want it to, so you can stop asking for urgent2k and start making Daily2k.</p>
+    <p>THANK YOU AdeleDev
+  </div>
+  <script>
+    const signupForm = document.getElementById('signupForm');
+
+    signupForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const fullName = document.getElementById('fullName').value;
+      const number = document.getElementById('number').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      try {
+        const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
+        // Save additional user information to Firestore
+        const user = userCredential.user;
+        await firebase.firestore().collection('users').doc(user.uid).set({
+          fullName: fullName,
+          number: number,
+          email: email,
+          balance: 0
+        });
+        window.location.href = 'home.html';
+      } catch (error) {
+        console.error("Error signing up: ", error);
+      }
+    });
+  </script>
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBWwnKbrvvEGTxdRmk2xalAKuZLEGF98uk",
+      authDomain: "mydaily2k-pj.firebaseapp.com",
+      projectId: "mydaily2k-pj",
+      storageBucket: "mydaily2k-pj.appspot.com",
+      messagingSenderId: "1091928974052",
+      appId: "1:1091928974052:web:f325fa0ce13111c8a102f1",
+      measurementId: "G-T5Z7B4LSFB"
+    };
+    firebase.initializeApp(firebaseConfig);
+  </script>
+</body>
+</html>
